@@ -29,7 +29,7 @@ This builds the image and brings the app online at Port 2500 by default. Visit `
 1. Upload the data file
     * **Allowed formats**: CSV, Shapefile (in ZIP), GeoJSON, JSON
 1. **Optional**: the data file can be compared with datasets stored in ArcGIS Online, in that case will need to enter the URL here
-    * **Example**: https://services3.arcgis.com/b9WvedVPoizGfvfD/ArcGIS/rest/services/COTGEO_POLICE_DIVISION/FeatureServer
+    * **E.g.**: [Open Dataset in ArcGIS Online](https://services3.arcgis.com/b9WvedVPoizGfvfD/ArcGIS/rest/services/COTGEO_POLICE_DIVISION/FeatureServer)
 
 ## Caveats
 1. This app is not yet intended for production environments
