@@ -4,5 +4,5 @@ services:
   data-validation-tool:
     build: .
     ports:
-      - "2500:5000"
+      - "5000:5000"
     restart: always

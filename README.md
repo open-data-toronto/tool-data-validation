@@ -19,7 +19,7 @@ Need to run from `apps` directory.
 #### Execute
 > docker-compose up --build [-d]
 
-This builds the image and brings the app online at Port 2500 by default. Visit `http://localhost:2500` to see it.
+This builds the image and brings the app online at Port 5000 by default. Visit `http://localhost:5000` to see it.
 
 #### Logs
 > docker-compose logs [-f]
