@@ -1,0 +1,8 @@
+version: '2.3'
+
+services:
+  data-validation-tool:
+    build: .
+    ports:
+      - "2500:5000"
+    restart: always

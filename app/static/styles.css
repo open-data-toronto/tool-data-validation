@@ -1,0 +1,169 @@
+/* * {
+    font-family:Roboto;
+    padding:0;
+    margin:0;
+    line-height:110%
+}
+
+h1 {
+    font-weight: 400;
+    margin:0 0 15px 0;
+}
+
+h2 {
+    font-weight: 300;
+}
+
+#page {
+    margin:20px auto;
+    width: 1192px
+}
+
+#page ul, #page ul li {
+    padding: 0;
+    margin:0 0 0 12px;
+}
+
+#page ul li {
+    padding:0 0 3px 0;
+}
+
+#page p {
+    padding: 0 0 15px 0
+}
+
+
+.col-6 {
+    width: calc(50% - 5px);
+    display:inline-block
+}
+
+.col-4 {
+    width: calc(32%);
+    display:inline-block;
+    margin-right: 18px;
+}
+
+.col-4:last-child {
+    margin-right: 0;
+}
+
+.col-8 {
+    width: 66%;
+    display:inline-block;
+}
+
+.col-12 {
+    width: 100%;
+}
+
+.col-12 p {
+    padding: 12px 0 !important;
+}
+
+section {
+    border: 1px solid #155788;
+    margin: 0 0 30px 0;
+}
+
+.section-group {
+    border: 2px solid #155788;
+}
+
+.section-group-header {
+    background: #155788;
+    padding: 10px 15px;
+}
+
+.section-group-header h2 {
+    color: #ffffff;
+}
+
+.section-group-area {
+    border-bottom: 1px solid #155788;
+    padding: 30px;
+}
+
+.section-group-area:last-child {
+    border-bottom: 0;
+}
+
+.section-group-area h3 {
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #155788;
+    font-size: 16px;
+    margin: 0 0 18px 0;
+    display: block;
+    width: 100%;
+}
+
+.section-group-area label{
+    display:block;
+    clear: both;
+    font-weight: 500;
+    font-size: 20px;
+    margin: 30px 0 0 0;
+}
+
+.section-group-area input, .section-group-area select, .section-group-area textarea {
+    border-radius: 0;
+    font-size: 18px;
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #222222;
+    margin: 8px 0 0 0;
+}
+
+.section-group-area textarea {
+    height: 100px;
+}
+
+.section-group-area table {
+    border:1px solid #666
+}
+
+.section-group-area table thead td {
+    padding: 10px 14px;
+    font-weight:bold;
+    background:#f4f4f4;
+    text-align: center
+}
+
+.section-group-area table td {
+    border: 1px solid #ccc;
+}
+
+.section-group-area table input {
+    border: 0 !important;
+    margin: 0;
+}
+
+.section-group-area table select {
+    border:0;
+    margin: 0;
+}
+
+button {
+    margin: 0 auto;
+    background: #155788;
+    color: #ffffff;
+    font-size: 18px;
+    padding: 12px 18px;
+    margin: 8px 0px 8px 8px;
+    border-radius: 2px;
+    border:0;
+}
+
+button:hover {
+    background: #222222;
+}
+
+.required-field:after {
+    content:'* Required';
+    display: inline-block;
+    float: right;
+    color: red;
+    text-transform: uppercase;
+    font-size: 12px;
+} */
