@@ -11,7 +11,6 @@ import pandas as pd
 import requests
 import os
 
-import logging, pdb
 def read_file(data, format):
     if format == 'csv':
         return pd.read_csv(BytesIO(data))
