@@ -15,7 +15,7 @@ def read_file(data, format):
     if format == 'csv':
         return pd.read_csv(BytesIO(data))
     if format == 'json':
-        return pd.DataFrame(data)
+        return pd.DataFrame(json.loads(data))
     elif format == 'geojson':
         with BytesCollection(data) as f:
             return gpd.GeoDataFrame.from_features(f, crs=f.crs)
