@@ -216,9 +216,7 @@ class DataFrameValidation:
         dtype_map = {
             'object': ['TEXT', 'VARCHAR', 'esriFieldTypeString'],
             'int64': ['INTEGER', 'esriFieldTypeSmallInteger', 'esriFieldTypeInteger', 'esriFieldTypeOID'],
-            'float64': ['DECIMAL', 'esriFieldTypeDouble'],
-            'float32': ['DECIMAL', 'esriFieldTypeDouble'],
-            'float': ['DECIMAL', 'esriFieldTypeDouble'],
+            'float64': ['DECIMAL', 'esriFieldTypeDouble', 'float'],
             'bool': ['TRUE/FALSE'],
             'datetime64': ['DATETIME', 'esriFieldTypeDate']
         }
