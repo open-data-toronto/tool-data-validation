@@ -79,7 +79,7 @@ class DataFrameComparison:
         src, new = self.src, self.new
         if type(src) != type(new):
             return  {
-                'message': 'Frame types are different',
+                'message': 'Trying to compare geographic and tabular datasets',
                 'level': 'error'
             }
 
