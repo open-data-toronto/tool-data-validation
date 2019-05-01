@@ -109,10 +109,10 @@ def validate():
 @app.route('/download', methods=['GET'])
 def download():
     global new_data, new_data_filename
-    resp = make_response(new_data.to_csv())
+    resp = make_response(new_data.to_csv(index=False))
     resp.headers["Content-Disposition"] = "attachment; filename={0}_checked.csv".format(new_data_filename.split('.')[0])
     resp.headers["Content-Type"] = "text/csv"
-    
+
     return resp
 
 if __name__ == "__main__":
