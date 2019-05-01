@@ -217,6 +217,8 @@ class DataFrameValidation:
             'object': ['TEXT', 'VARCHAR', 'esriFieldTypeString'],
             'int64': ['INTEGER', 'esriFieldTypeSmallInteger', 'esriFieldTypeInteger', 'esriFieldTypeOID'],
             'float64': ['DECIMAL', 'esriFieldTypeDouble'],
+            'float32': ['DECIMAL', 'esriFieldTypeDouble'],
+            'float': ['DECIMAL', 'esriFieldTypeDouble'],
             'bool': ['TRUE/FALSE'],
             'datetime64': ['DATETIME', 'esriFieldTypeDate']
         }
@@ -248,7 +250,7 @@ class DataFrameValidation:
                     try:
                         column_values = df[column].dropna().drop_duplicates()
                         if not column_values.empty:
-                            if pandas_dtype in ['int64', 'float64']:
+                            if pandas_dtype in ['int64', 'float64', 'float32', 'float']:
                                 column_values = pd.to_numeric(column_values)
                             elif pandas_dtype in ['datetime64']:
                                 column_values = pd.to_datetime(column_values)
