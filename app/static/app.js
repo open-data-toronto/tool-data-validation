@@ -382,7 +382,6 @@ $(document).ready(function () {
                 let formData = new FormData(this),
                     schema = [],
                     columns_excluded = [];
-                
 
                 $('#table-schema tbody tr').each(function () {
                     let column = {},
@@ -512,14 +511,14 @@ $(document).ready(function () {
                             $('#report-comparison-tabs.menu .item').tab({
                                 context: 'parent'
                             });
-                            
+
                             $('#comparison-results-dataset .ui.message')
-                            .addClass(compare_dataframes.level)
-                            .find('.header')
-                            .first()
-                            .append(compare_dataframes.message)
-                            .find('i')
-                            .addClass((compare_dataframes.level === 'info') ? 'info' : 'close');
+                                .addClass(compare_dataframes.level)
+                                .find('.header')
+                                .first()
+                                .append(compare_dataframes.message)
+                                .find('i')
+                                .addClass((compare_dataframes.level === 'info') ? 'info' : 'close');
 
 
                         $('#comparison-results')
