@@ -38,6 +38,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/accordion.min.js" integrity="sha256-kt0Dfi+mrxAU+iYsfDrkROHrb55Hi0lVWC7MT46/xnU="
     crossorigin="anonymous"></script>
 
+
   <script src="{{ url_for('static', filename='app.js') }}"></script>
   <script src="{{ url_for('static', filename='tablesort.js') }}"></script>
 
@@ -52,77 +53,89 @@
   </div>
   <br />
   <main id="page-content" class="ui container" style="padding-bottom:2em">
-    <h1 class="ui dividing header">Data Validation Tool
-      <div class="sub header">Intake Form</div>
-    </h1>
+    <h1 class="ui header">Data Validation Tool</h1>
     <form class="ui form" id="form-atpf" method="post" enctype="multipart/form-data">
-      <div class="ui vertically divided horizontally grid">
-        <div class="row">
-          <div class="sixteen wide column">
-            <h2 class="ui header">Dataset</h2>
-            <div class="two fields">
-              <div class="six wide required field">
-                <label for="dataset_name">Dataset Name</label>
-                <input type="text" name="dataset_name" data-field="dataset_name" placeholder="Dataset name">
-              </div>
-              <div class="ten wide field">
-                <label for="agol_url">ArcGIS Online URL</label>
-                <input type="text" name="agol_url" data-field="agol_url" placeholder="https://services3.arcgis.com">
-              </div>
-            </div>
-
-            <div class="ui labeled button" tabindex="0" id="upload-button">
-              <label for="payload" class="ui blue button">
-                <i class="upload icon"></i>
-                Upload
-              </label>
-              <label class="ui basic left pointing label" id="uploaded-file" for="payload">Select data file
-              </label>
-              <input type="file" name="payload" data-field="payload" id="payload" style="display: none">
-            </div>
-
-            <h2 class="ui header">Fields</h2>
-            <table class="ui striped very compact table" id="table-schema">
-              <thead>
-                <th>Validate?</th>
-                <th class="twelve wide">Name</th>
-                <th class="two wide">Type</th>
-              </thead>
-              <tbody>
-              </tbody>
-              <tfoot class="full-width">
-                <tr>
-                  <th colspan="5">
-                    <button class="ui button disabled right floated" id="btn-add-row" type="button">
-                      <i class="plus icon"></i>
-                      Add Field
-                    </button>
-                  </th>
-                </tr>
-              </tfoot>
-            </table>
+      <div class="ui segments">
+        <div class="ui segment">
+          <div class="field">
+            <label for="dataset_name">Name</label>
+            <input type="text" name="dataset_name" data-field="dataset_name" placeholder="Dataset name">
           </div>
         </div>
-
+        <div class="ui segment">
+          <div class="required field"><label>Data to validate</label></div>
+          <p id="formats-msg">Allowed formats include CSV, GeoJSON, Shapefile (ZIP), and JSON (unnested)</p>
+          <div class="ui basic segment">
+            <div class="ui labeled button upload" tabindex="0" id="upload-new-file-button">
+              <label for="new_file" class="ui blue button"><i class="upload icon"></i>Upload</label>
+              <label class="ui basic left pointing label" id="new-uploaded-file" for="new_file">Select data file</label>
+              <input type="file" name="new_file" data-field="new_file" id="new_file" style="display: none">
+            </div>
+          </div>
+          <div class="ui styled fluid accordion" id="fields-accordion">
+            <div class="title">
+              <div><i class="dropdown icon"></i>Fields</div>
+            </div>
+            <div class="content">
+              <table class="ui very basic very compact table" id="table-schema">
+                <thead>
+                  <th>Validate?</th>
+                  <th class="twelve wide">Name</th>
+                  <th class="two wide">Type</th>
+                </thead>
+                <tbody>
+                </tbody>
+                <tfoot class="full-width">
+                  <tr>
+                    <th colspan="5">
+                      <button class="ui button disabled right floated" id="btn-add-row" type="button"><i class="plus icon"></i>Add
+                        Field</button>
+                    </th>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="ui segment">
+          <div class="field" style="margin-bottom: 0"><label>Data to compare (optional)</label></div>
+          <p>Uploaded data file can be compared to an <a href="http://insideto-dev.toronto.ca/itweb/support/geospatial/MapServiceCatalog/searchGCC.html"
+              target="_blank">existing map service</a> in ArcGIS Online or to another data file.</p>
+          <div class="content">
+            <div class="ui secondary pointing menu" id="comparison-data-tabs">
+              <a class="active item" data-tab="agol_url">ArcGIS Online</a>
+              <a class="item" data-tab="src_file">Data File</a>
+            </div>
+            <div style="min-height:5em" class="ui basic segment">
+              <div class="ui tab active" data-tab="agol_url">
+                <div class="field">
+                  <input type="text" name="agol_url" data-field="agol_url" placeholder="https://gis.toronto.ca/arcgis/rest/services/primary/dataset/MapServer/0"
+                    id="agol_url">
+                </div>
+              </div>
+              <div class="ui tab" data-tab="src_file">
+                <div class="ui labeled button upload" tabindex="0" id="upload-src-file-button">
+                  <label for="src_file" class="ui blue button"><i class="upload icon"></i>Upload</label>
+                  <label class="ui basic left pointing label" id="src-uploaded-file" for="src_file">Select data
+                    file</label>
+                  <input type="file" name="src_file" data-field="src_file" id="src_file" style="display: none">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+
       <div class="ui primary submit button right floated right labeled icon"><i class="play icon"></i>Submit</div>
       <div class="ui clear button labeled icon"><i class="undo icon"></i>Clear&nbsp;</div>
       <div class="ui error message"></div>
     </form>
 
-    <div class="ui segments" id="report">
-      <div class="ui segment">
-        <h2 class="ui header">Report Details</h2>
-        <div class="ui basic segment">
-          <table class="ui very compact very basic table" id="report-info">
-            <tbody></tbody>
-          </table>
-        </div>
-      </div>
-      <div class="ui segment" >
-        <h2 class="ui header">File results overview</h2>
+    <div class="ui container" id="report">
+      <h2 class="ui header top attached" id="file-results-overview">Validation</h2>
+      <div class="ui segment bottom attached">
         <div class="ui basic segment" id="dataset-validation">
-          <h3 class="top attached">Dataset Validation</h3>
+          <h3 class="top attached">Dataset</h3>
           <div class="ui info message attached">
             <div class="header"><i class="icon"></i></div>
           </div>
@@ -144,12 +157,12 @@
             </div>
           </div>
         </div>
-        <div class="ui basic segment" id="column-profiling">
-          <h3 class="top attached">Column Profiles</h3>
+        <div class="ui basic segment" id="column-validation">
+          <h3 class="top attached">Columns</h3>
           <div class="ui message attached">
             <div class="header"><i class="icon"></i></div>
           </div>
-          <div class="ui styled fluid accordion bottom attached" id="column-profiling-accordion">
+          <div class="ui styled fluid accordion bottom attached" id="column-validation-accordion">
             <div class="title">
               <div><i class="dropdown icon"></i>Details</div>
             </div>
@@ -194,100 +207,108 @@
           </div>
         </div>
       </div>
-      <div class="ui segment" id="report-comparison">
-        <h2 class="ui header">Comparison with AGOL data</h2>
-        <div class="ui basic segment">
-          <h3 class="top attached">Column Types</h3 top attached>
-          <div class="ui message attached">
-            <div class="header"><i class="icon"></i></div>
-          </div>
-          <div class="ui styled fluid accordion bottom attached" id="report-comparison-accordion">
-            <div class="title">
-              <div><i class="dropdown icon"></i>Details</div>
+      <div id="report-comparison">
+        <h2 class="ui header top attached" id="comparison-results">Comparison</h2>
+        <div class="ui segment bottom attached">
+            <div class="ui basic segment" id="comparison-results-dataset">
+                <h3 class="top attached">Dataset</h3>
+                <div class="ui message">
+                  <div class="header"><i class="icon"></i></div>
+                </div>
+              </div>
+          <div class="ui basic segment" id="comparison-results-columns">
+            <h3 class="top attached">Columns</h3>
+            <div class="ui message attached">
+              <div class="header"><i class="icon"></i></div>
             </div>
-            <div class="content">
-              <div class="ui secondary pointing menu" id="report-comparison-tabs">
-                <a class="item" data-tab="added">Added</a>
-                <a class="item" data-tab="removed">Removed</a>
-                <a class="item" data-tab="modified">Modified</a>
-                <a class="item" data-tab="matched">Matched</a>
+            <div class="ui styled fluid accordion bottom attached" id="report-comparison-accordion">
+              <div class="title">
+                <div><i class="dropdown icon"></i>Details</div>
               </div>
-              <div class="ui tab" data-tab="added">
-                <table class="ui very basic very compact table" id="compare-columns-added">
-                  <thead>
-                    <tr>
-                      <th class="center aligned">Column added to data file</th>
-                      <th class="center aligned">Type</th>
-                      <th class="center aligned">Change</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                  </tbody>
-                </table>
-              </div>
-              <div class="ui tab" data-tab="removed">
-                <table class="ui very basic very compact table" id="compare-columns-removed">
-                  <thead>
-                    <tr>
-                      <th class="center aligned">Column removed from ArcGIS Online</th>
-                      <th class="center aligned">Type</th>
-                      <th class="center aligned">Change</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                  </tbody>
-                </table>
-              </div>
-              <div class="ui tab" data-tab="modified">
-                <table class="ui very basic very compact table" id="compare-columns-modified">
-                  <thead>
+              <div class="content">
+                <div class="ui secondary pointing menu" id="report-comparison-tabs">
+                  <a class="item" data-tab="added">Added</a>
+                  <a class="item" data-tab="removed">Removed</a>
+                  <a class="item" data-tab="modified">Modified</a>
+                  <a class="item" data-tab="matched">Matched</a>
+                </div>
+                <div class="ui tab" data-tab="added">
+                  <table class="ui very basic very compact table" id="compare-columns-added">
                     <thead>
                       <tr>
-                        <th class="center aligned"></th>
-                        <th class="center aligned">Type in File</th>
-                        <th class="center aligned">Type in ArcGIS Online</th>
-                        <th class="center aligned">Change</th>
-                      </tr>
-                    </thead>
-                  <tbody>
-                  </tbody>
-                </table>
-              </div>
-              <div class="ui tab" data-tab="matched">
-                <table class="ui very basic very compact table" id="compare-columns-matched">
-                  <thead>
-                    <thead>
-                      <tr>
-                        <th></th>
+                        <th>Column added to data file</th>
                         <th class="center aligned">Type</th>
                         <th class="center aligned">Change</th>
                       </tr>
                     </thead>
-                  <tbody>
-                  </tbody>
+                    <tbody>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="ui tab" data-tab="removed">
+                  <table class="ui very basic very compact table" id="compare-columns-removed">
+                    <thead>
+                      <tr>
+                        <th>Column removed from ArcGIS Online</th>
+                        <th class="center aligned">Type</th>
+                        <th class="center aligned">Change</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="ui tab" data-tab="modified">
+                  <table class="ui very basic very compact table" id="compare-columns-modified">
+                    <thead>
+                      <thead>
+                        <tr>
+                          <th></th>
+                          <th class="center aligned">Type in File</th>
+                          <th class="center aligned">Type in ArcGIS Online</th>
+                          <th class="center aligned">Change</th>
+                        </tr>
+                      </thead>
+                    <tbody>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="ui tab" data-tab="matched">
+                  <table class="ui very basic very compact table" id="compare-columns-matched">
+                    <thead>
+                      <thead>
+                        <tr>
+                          <th></th>
+                          <th class="center aligned">Type</th>
+                          <th class="center aligned">Change</th>
+                        </tr>
+                      </thead>
+                    <tbody>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ui basic segment">
+            <h3 class="top attached">Rows</h3>
+            <div class="ui styled fluid accordion bottom attached">
+              <div class="title">
+                <div><i class="dropdown icon"></i>Details</div>
+              </div>
+              <div class="content">
+                <table class="ui very basic very compact table" id="report-compare-rows">
+                  <thead>
+                    <tr></tr>
+                  </thead>
+                  <tbody></tbody>
                 </table>
               </div>
             </div>
           </div>
         </div>
-
-        <div class="ui basic segment">
-          <h3 class="top attached">Row Counts</h3>
-          <div class="ui styled fluid accordion bottom attached">
-            <div class="title">
-              <div><i class="dropdown icon"></i>Details</div>
-            </div>
-            <div class="content">
-              <table class="ui very basic very compact table" id="report-compare-rows">
-                <thead>
-                  <tr></tr>
-                </thead>
-                <tbody></tbody>
-              </table>
-            </div>
-          </div>
-        </div>
       </div>
+          <div class="ui primary submit button right floated right labeled icon" id="download"><i class="download icon"></i>Download</div>
     </div>
   </main>
 </body>
