@@ -75,6 +75,30 @@ class DataFrameComparison:
 
         return results
 
+    def compare_dataframes(self):
+        src, new = self.src, self.new
+        if type(src) != type(new):
+            return  {
+                'message': 'Frame types are different',
+                'level': 'error'
+            }
+
+        if isinstance(src, gpd.geodataframe.GeoDataFrame) and isinstance(new, gpd.geodataframe.GeoDataFrame):
+            src['geometry'] = src['geometry'].apply(lambda x: str(x))
+            new['geometry'] = new['geometry'].apply(lambda x: str(x))
+
+        src_cols = sorted([c for c in self.src.columns.values])
+        new_cols = sorted([c for c in self.new.columns.values])
+        src = src[src_cols].sort_values(by=src_cols).reset_index(drop=True)
+        new = new[new_cols].sort_values(by=new_cols).reset_index(drop=True)
+        same_df = src.equals(new)
+
+        return {
+            'message': 'Datasets are the same' if same_df else 'Datasets are different',
+            'level': 'error' if same_df else 'info'
+        }
+        
+
 class DataFrameValidation:
     '''
         TODOS:
