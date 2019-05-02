@@ -147,11 +147,11 @@ $(document).ready(function () {
 
         // column comparison
         let compParams = {};
-        if ($('#compare-columns-added tbody tr').length > 1 || $('#compare-columns-removed tbody tr').length > 1) {
+        if ($('#compare-columns-added tbody tr').length > 0 || $('#compare-columns-removed tbody tr').length > 0) {
             compParams.msg = 'Do not publish. Columns have been added or removed.'
             compParams.level = 'negative'
             compParams.icon = 'close'
-        } else if ($('#compare-columns-matched tbody tr').length > 1) {
+        } else if ($('#compare-columns-matched tbody tr').length > 0) {
             compParams.level = 'success'
             compParams.msg = 'All column types match between datasets'
             compParams.icon = 'checkmark'
