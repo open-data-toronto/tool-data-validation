@@ -559,6 +559,13 @@ $(document).ready(function () {
                             L.tileLayer('https://communitymapcanada.ca/arcgis/rest/services/CommunityMapsCache/MapServer/tile/{z}/{y}/{x}?blankTile=false', {
                                 attribution: '&copy; <a href="https://www.toronto.ca/">City of Toronto</a>'
                             }).addTo(mymap);
+
+                            $('#profiling-accordion').accordion({
+                                animateChildren: false,
+                                exclusive: false,
+                                onOpen: function () { mymap.invalidateSize(true) }
+                            });
+
                         } else {
                             $("#validation-map").remove()
                         }
