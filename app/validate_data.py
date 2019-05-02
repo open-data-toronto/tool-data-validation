@@ -384,7 +384,7 @@ class DataFrameValidation:
     def validate_column_names(self):
         '''
         '''
-        if all(len(x) <= self.ax_column_name_length for x in self.df.columns):
+        if all(len(x) <= self.max_column_name_length for x in self.df.columns):
             return {
                 'message': 'Column names may be truncated',
                 'level': 'warning'
