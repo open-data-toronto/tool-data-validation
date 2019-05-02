@@ -97,7 +97,6 @@ $(document).ready(function () {
                     .append('<tr><td>' + row[0] + '</td><td class="center aligned disabled"><i class="icon checkmark"></i>' + row.slice(1).map(n => '').join('</td><td class="center aligned disabled"><i class="icon checkmark"></i>') + '</td></tr>')
             }
         });
-        $('#' + tableId + '.sortable').tablesort();
     }
 
     function fillSummaryMessages(validateData) {
