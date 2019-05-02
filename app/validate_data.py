@@ -91,7 +91,7 @@ class DataFrameComparison:
         same_df = src.equals(new)
 
         return {
-            'message': 'Datasets are the same' if same_df else 'Datasets are different',
+            'message': 'Datasets are the same' if same_df else 'Data is not exactly the same',
             'level': 'error' if same_df else 'info'
         }
         
