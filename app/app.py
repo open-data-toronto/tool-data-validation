@@ -72,14 +72,14 @@ def validate():
     }
     compare_columns = {
         'index': '',
-        'new': 'File Uploaded',
-        'source': 'ArcGIS Online',
+        'new': 'Validation Data File',
+        'source': 'Comparison Data',
         'message': 'Change',
     }
     compare_rows = {
         'index': '',
-        'new': 'File Uploaded',
-        'source': 'ArcGIS Online',
+        'new': 'Validation Data File',
+        'source': 'Comparison Data',
         'difference': 'Difference',
     }
 
