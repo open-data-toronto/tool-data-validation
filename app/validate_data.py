@@ -19,7 +19,7 @@ class DataFrameComparison:
 
     def compare_columns(self):
         '''
-            Comparse the columns between the source and new DataFrame to find:
+            Compares the columns between the source and new DataFrame to find:
                 * the columns that were inserted into the new DataFrame
                 * the columns that existed in the source DataFrame but missing from the new DataFrame
                 * the columns where the datatypes changed between the source and new DataFrames
