@@ -153,7 +153,7 @@ class DataFrameValidation:
 
         return results
 
-    def profile_columns(self, perc_missing_thresh=None, perc_zeros_thresh=None, perc_leading_sp=None, perc_trailing_sp=None):
+    def profile_columns(self):
         '''
             Flags columns that meet one of the following criteria:
                 1. % missing > perc_missing_thresh
@@ -162,33 +162,16 @@ class DataFrameValidation:
                 4. All unique values (may be a foreign key)
                 5. Same number of unique values as another column (may be code/description/foreign key columns)
         '''
-        if perc_missing_thresh is None:
-            perc_missing_thresh = self.perc_missing_thresh
-
-        if perc_zeros_thresh is None:
-            perc_zeros_thresh = self.perc_zeros_thresh
-
-        if perc_leading_sp is None:
-            perc_leading_sp = self.perc_leading_sp
-
-        if perc_trailing_sp is None:
-            perc_trailing_sp = self.perc_trailing_sp
-            
         df = self.df[[ c for c in self.df.columns if c != 'geometry' ]]
-
-        # Validate threshold parameters are between 0 and 1
-        assert isinstance(perc_missing_thresh, (int, float)) and 0 <= perc_missing_thresh <= 1 and \
-            isinstance(perc_zeros_thresh, (int, float)) and 0 <= perc_zeros_thresh <= 1, \
-            'Parameters: perc_missing_thresh and perc_zeros_thresh must be a number between 0 and 1'
 
         # Initiate the thresholds and comparison methods
         cutoffs = pd.DataFrame({
-            'p_missing': (np.greater, perc_missing_thresh),
-            'p_zeros': (np.greater, perc_zeros_thresh),
+            'p_missing': (np.greater, self.perc_missing_thresh),
+            'p_zeros': (np.greater, self.perc_zeros_thresh),
             'distinct_count': (np.equal, 1),
             'is_unique': (np.equal, True),
-            'p_leading_space': (np.greater, perc_leading_sp),
-            'p_trailing_space': (np.greater, perc_trailing_sp)            
+            'p_leading_space': (np.greater, self.perc_leading_sp),
+            'p_trailing_space': (np.greater, self.perc_trailing_sp)            
         }, index=['method', 'threshold'])
 
         def check_column(array):
@@ -327,21 +310,11 @@ class DataFrameValidation:
             }
         }
         
-    def validate_slivers(self, area_m2_thresh=None, len_m_thresh=None):
+    def validate_slivers(self):
         GEOM_TYPE_MAP = {
-            'Polygon': {'shapely_geometry': MultiPolygon, 'threshold': area_m2_thresh},
-            'LineString': {'shapely_geometry': MultiLineString, 'threshold': len_m_thresh}
+            'Polygon': {'shapely_geometry': MultiPolygon, 'threshold': self.area_m2_thresh},
+            'LineString': {'shapely_geometry': MultiLineString, 'threshold': self.len_m_thresh}
         }
-        if area_m2_thresh is None:
-            area_m2_thresh = self.area_m2_thresh
-
-        if len_m_thresh is None:
-            len_m_thresh = self.len_m_thresh
-
-        assert isinstance(len_m_thresh, (int, float)) and len_m_thresh > 0 and \
-            isinstance(area_m2_thresh, (int, float)) and area_m2_thresh > 0, \
-            'Parameters: len_m_thresh and len_m_thresh must be numeric and greater than 0'
-
         if not isinstance(self.df, gpd.geodataframe.GeoDataFrame):
             return {
                 'message': 'Data not a valid GeoDataFrame',
@@ -353,9 +326,9 @@ class DataFrameValidation:
         if any(['linestring' in x.lower() or 'polygon' in x.lower() for x in self.df.geom_type]):
             def get_area_or_length(x):
                 if 'polygon' in x.geom_type.lower():
-                    return True if x.area < area_m2_thresh else False
+                    return True if x.area < self.area_m2_thresh else False
                 elif 'linestring' in x.geom_type.lower():
-                    return True if x.length < len_m_thresh else False
+                    return True if x.length < self.len_m_thresh else False
                 else:
                     return np.nan
 
@@ -408,13 +381,10 @@ class DataFrameValidation:
             }
         }
 
-    def validate_column_names(self, max_column_name_length=None):
+    def validate_column_names(self):
         '''
         '''
-        if max_column_name_length is None:
-            max_column_name_length = self.max_column_name_length
-
-        if all(len(x) <= max_column_name_length for x in self.df.columns):
+        if all(len(x) <= self.ax_column_name_length for x in self.df.columns):
             return {
                 'message': 'Column names may be truncated',
                 'level': 'warning'
@@ -425,27 +395,16 @@ class DataFrameValidation:
             'level': 'success'
         }
 
-    def validate_crs(self, epsg_code=None, xmin=None, ymin=None, xmax=None, ymax=None):
+    def validate_crs(self):
         '''
         '''
-        if xmin is None:
-            xmin = self.xmin
-        if ymin is None:
-            ymin = self.ymin
-        if xmax is None:
-            xmax = self.xmax
-        if ymax is None:
-            ymax = self.ymax
-        if epsg_code is None:
-            epsg_code = self.epsg_code
-
         if not isinstance(self.df, gpd.geodataframe.GeoDataFrame):
             return {
                 'message': 'Data not a valid GeoDataFrame',
                 'level': 'info'
             }
 
-        if self.df.to_crs(epsg=epsg_code).cx[xmin:xmax, ymin:ymax].shape[0] == self.df.shape[0] and np.inf not in self.df.to_crs(epsg=epsg_code).total_bounds:
+        if self.df.to_crs(epsg=self.epsg_code).cx[self.xmin:self.xmax, self.ymin:self.ymax].shape[0] == self.df.shape[0] and np.inf not in self.df.to_crs(epsg=self.epsg_code).total_bounds:
             return {
                 'message': 'Pass',
                 'level': 'success'
@@ -456,27 +415,16 @@ class DataFrameValidation:
             'level': 'warning'
         }
 
-    def validate_geometries_within_bbox(self, xmin=None, ymin=None, xmax=None, ymax=None, epsg_code=None):
+    def validate_geometries_within_bbox(self):
         '''
         '''
-        if xmin is None:
-            xmin = self.xmin
-        if ymin is None:
-            ymin = self.ymin
-        if xmax is None:
-            xmax = self.xmax
-        if ymax is None:
-            ymax = self.ymax
-        if epsg_code is None:
-            epsg_code = self.epsg_code
-
         if not isinstance(self.df, gpd.geodataframe.GeoDataFrame):
             return {
                 'message': 'Data not a valid GeoDataFrame',
                 'level': 'info'
             }
 
-        if self.df.to_crs(epsg=epsg_code).cx[xmin:xmax, ymin:ymax].shape[0] != self.df.shape[0]:
+        if self.df.to_crs(epsg=self.epsg_code).cx[self.xmin:self.xmax, self.ymin:self.ymax].shape[0] != self.df.shape[0]:
             return {
                 'message': 'Not all geometries within boundaries',
                 'level': 'warning'
@@ -487,14 +435,9 @@ class DataFrameValidation:
             'level': 'success'
         }
 
-    def validate_geometries_in_boundaries(self,epsg_code=None, city_wards_agol_url=None):
+    def validate_geometries_in_boundaries(self):
         '''
         '''
-        if city_wards_agol_url is None:
-            city_wards_agol_url = self.city_wards_agol_url
-        if epsg_code is None:
-            epsg_code = self.epsg_code
-
         if not isinstance(self.df, gpd.geodataframe.GeoDataFrame):
             return {
                 'message': 'Data not a valid GeoDataFrame',
@@ -502,13 +445,13 @@ class DataFrameValidation:
             }
         
         # get city boundaries by merging wards polygons into one
-        boundaries = utils.read_agol_endpoint(agol_url=city_wards_agol_url)
+        boundaries = utils.read_agol_endpoint(agol_url=self.city_wards_agol_url)
         boundaries['constant'] = 1
         boundaries = boundaries.dissolve('constant').reset_index()
-        boundaries = boundaries.drop([c for c in boundaries.columns if c != 'geometry'], axis=1).to_crs(epsg=epsg_code)
+        boundaries = boundaries.drop([c for c in boundaries.columns if c != 'geometry'], axis=1).to_crs(epsg=self.epsg_code)
 
         # breakup source dataframe multi-features to check them individually
-        gdf = self.df.to_crs(epsg=epsg_code).explode().reset_index()
+        gdf = self.df.to_crs(epsg=self.epsg_code).explode().reset_index()
 
         # perform spatial join between individual source features and city boundaries
         join_df = gpd.sjoin(gdf, boundaries, how='inner').set_index(['level_0', 'level_1'])
