@@ -164,7 +164,7 @@ $(document).ready(function () {
             compParams.icon = 'close'
         } else if ($('#compare-columns-matched tbody tr').length > 1) {
             compParams.level = 'success'
-            compParams.msg = 'All column types match between file and ArcGIS Online.'
+            compParams.msg = 'All column types match between datasets'
             compParams.icon = 'checkmark'
         } else {
             compParams.level = 'info'
