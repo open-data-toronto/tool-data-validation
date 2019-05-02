@@ -28,11 +28,11 @@ class DataFrameComparison:
         results = []
         for column in np.union1d(new.columns, src.columns):
             change = 'matched'
-            if src[column].dropna().empty and new[column].dropna().empty and (src[column].dtype == 'object' and new[column].dtype == 'float64') \
-                or ( src[column].dtype == 'float64' and new[column].dtype == 'object' ):
+            if (column in src.columns and src[column].dropna().empty) and (column in new.columns and new[column].dropna().empty) \
+                and ((src[column].dtype == 'object' and new[column].dtype == 'float64') or ( src[column].dtype == 'float64' and new[column].dtype == 'object' )):
                 src[column] = src[column].astype('object')
                 new[column] = new[column].astype('object')
-            if column in new.columns and column in src.columns and src[column].dtype != new[column].dtype:
+            elif column in new.columns and column in src.columns and src[column].dtype != new[column].dtype:
                 change = 'modified'
             elif column in new.columns and column not in src.columns:
                 change = 'added'
