@@ -24,22 +24,26 @@ class DataFrameComparison:
                 * the columns that existed in the source DataFrame but missing from the new DataFrame
                 * the columns where the datatypes changed between the source and new DataFrames
         '''
+        src, new = self.src, self.new
         results = []
-
-        for column in np.union1d(self.new.columns, self.src.columns):
+        for column in np.union1d(new.columns, src.columns):
             change = 'matched'
-            if column in self.new.columns and column in self.src.columns and self.src[column].dtype != self.new[column].dtype:
+            if src[column].dropna().empty and new[column].dropna().empty and (src[column].dtype == 'object' and new[column].dtype == 'float64') \
+                or ( src[column].dtype == 'float64' and new[column].dtype == 'object' ):
+                src[column] = src[column].astype('object')
+                new[column] = new[column].astype('object')
+            if column in new.columns and column in src.columns and src[column].dtype != new[column].dtype:
                 change = 'modified'
-            elif column in self.new.columns and column not in self.src.columns:
+            elif column in new.columns and column not in src.columns:
                 change = 'added'
-            elif column in self.src.columns and column not in self.new.columns:
+            elif column in src.columns and column not in new.columns:
                 change = 'removed'
 
             results.append({
                 'message': change,
                 'index': column,
-                'source': self.src[column].dtype.name if column in self.src.columns else False,
-                'new': self.new[column].dtype.name if column in self.new.columns else False
+                'source': src[column].dtype.name if column in src.columns else False,
+                'new': new[column].dtype.name if column in new.columns else False
             })
 
         if len(results):
