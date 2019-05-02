@@ -67,6 +67,8 @@ def validate():
         'matched_columns': 'Code Column Match',
         'is_unique': 'All Uniques',
         'dtype_map': 'Data Type',
+        'p_leading_space': 'Over {perc_leading_sp}% Leading Spaces'.format(**results['params']),
+        'p_trailing_space': 'Over {perc_trailing_sp}% Trailing Spaces'.format(**results['params'])
     }
     compare_columns = {
         'index': '',

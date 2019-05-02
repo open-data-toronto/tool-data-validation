@@ -8,7 +8,6 @@ import traceback
 import geopandas as gpd
 import numpy as np
 import pandas as pd
-import pandas_profiling as pp
 import requests
 import utils
 
@@ -106,7 +105,7 @@ class DataFrameValidation:
             * Validate datetime formats are consistent
     '''
 
-    def __init__(self, data, schema={}, columns_excluded=['_id'], perc_missing_thresh=0.8, perc_zeros_thresh=0.8, area_m2_thresh=1, len_m_thresh=1, xmin=-8866597.4417, ymin=5399138.0493, xmax=-8806484.9167, ymax=5443802.3603, epsg_code = 3857, city_wards_agol_url='https://services3.arcgis.com/b9WvedVPoizGfvfD/arcgis/rest/services/COTGEO_CITY_WARD/FeatureServer', max_column_name_length=10):
+    def __init__(self, data, schema={}, columns_excluded=['_id'], perc_leading_sp=0.8, perc_trailing_sp=0.8, perc_missing_thresh=0.8, perc_zeros_thresh=0.8, area_m2_thresh=1, len_m_thresh=1, xmin=-8866597.4417, ymin=5399138.0493, xmax=-8806484.9167, ymax=5443802.3603, epsg_code = 3857, city_wards_agol_url='https://services3.arcgis.com/b9WvedVPoizGfvfD/arcgis/rest/services/COTGEO_CITY_WARD/FeatureServer', max_column_name_length=10):
         if 'geometry' in columns_excluded:
             columns_excluded.pop(columns_excluded.index('geometry'))
 
@@ -125,11 +124,15 @@ class DataFrameValidation:
         self.epsg_code=epsg_code
         self.city_wards_agol_url=city_wards_agol_url
         self.max_column_name_length=max_column_name_length
+        self.perc_leading_sp=perc_leading_sp
+        self.perc_trailing_sp=perc_trailing_sp
 
     def get_params(self):
         return {
             'perc_missing_thresh': int(self.perc_missing_thresh*100),
             'perc_zeros_thresh': int(self.perc_zeros_thresh*100),
+            'perc_leading_sp': int(self.perc_leading_sp*100),
+            'perc_trailing_sp': int(self.perc_trailing_sp*100),
             'area_m2_thresh': self.area_m2_thresh,
             'len_m_thresh': self.len_m_thresh,
             'xmin': self.xmin,
@@ -152,7 +155,7 @@ class DataFrameValidation:
 
         return results
 
-    def profile_columns(self, perc_missing_thresh=None, perc_zeros_thresh=None):
+    def profile_columns(self, perc_missing_thresh=None, perc_zeros_thresh=None, perc_leading_sp=None, perc_trailing_sp=None):
         '''
             Flags columns that meet one of the following criteria:
                 1. % missing > perc_missing_thresh
@@ -166,6 +169,12 @@ class DataFrameValidation:
 
         if perc_zeros_thresh is None:
             perc_zeros_thresh = self.perc_zeros_thresh
+
+        if perc_leading_sp is None:
+            perc_leading_sp = self.perc_leading_sp
+
+        if perc_trailing_sp is None:
+            perc_trailing_sp = self.perc_trailing_sp
             
         df = self.df[[ c for c in self.df.columns if c != 'geometry' ]]
 
@@ -176,14 +185,28 @@ class DataFrameValidation:
 
         # Initiate the thresholds and comparison methods
         cutoffs = pd.DataFrame({
-            'p_missing': (np.greater, 0.8),
-            'p_zeros': (np.greater, 0.8),
+            'p_missing': (np.greater, perc_missing_thresh),
+            'p_zeros': (np.greater, perc_zeros_thresh),
             'distinct_count': (np.equal, 1),
-            'is_unique': (np.equal, True)
+            'is_unique': (np.equal, True),
+            'p_leading_space': (np.greater, perc_leading_sp),
+            'p_trailing_space': (np.greater, perc_trailing_sp)            
         }, index=['method', 'threshold'])
 
-        profile = pp.ProfileReport(df, check_correlation=False).get_description()['variables']
-        profile = profile[[c for c in cutoffs.columns if c in profile.columns]]
+        def check_column(array):
+            return {
+                'p_missing': (array.size - array.count()) / array.size,
+                'p_zeros': array[array == 0].size / array.size,
+                'distinct_count': array.nunique(),
+                'is_unique': True if array.size == array.nunique() else False,
+                'p_leading_space': array.dropna()[array.dropna().str.startswith(" ")].size / array.size if array.dtype.name == 'object' else np.nan,
+                'p_trailing_space': array.dropna()[array.dropna().str.endswith(" ")].size / array.size if array.dtype.name == 'object' else np.nan
+            }
+
+        profile = {}
+        for column in df.columns:
+            profile[column] = check_column(df[column])
+        profile = pd.DataFrame(profile).T
 
         matched_columns = []
         dcount = profile[(~profile['is_unique'])&(profile['distinct_count']>1)].groupby('distinct_count').size()
