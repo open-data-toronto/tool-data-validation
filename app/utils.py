@@ -16,10 +16,10 @@ def read_file(data, format):
         return pd.read_csv(BytesIO(data))
     if format == 'json':
         return pd.DataFrame(json.loads(data))
-    elif format == 'geojson':
+    if format in ['geojson', 'gpkg']:
         with BytesCollection(data) as f:
             return gpd.GeoDataFrame.from_features(f, crs=f.crs)
-    elif format == 'zip':
+    if format == 'zip':
         with ZipMemoryFile(data) as f:
             for layer in fiona.listlayers(f.name, vfs='zip://'):
                 # Only reading the first layer of the Shapefile

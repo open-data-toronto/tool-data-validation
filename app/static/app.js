@@ -349,8 +349,8 @@ $(document).ready(function () {
                     },
                     {
                       type   : 'regExp',
-                      value  : '/^(.*.((zip|csv|json|geojson)$))?[^.]*$/i',
-                      prompt : 'Validation data: formats allowed are CSV, GeoJSON, Shapefile (ZIP), or JSON (unnested)' + this
+                      value  : '/^(.*.((zip|csv|json|gpkg|geojson)$))?[^.]*$/i',
+                      prompt : 'Validation data: formats allowed are CSV, GeoJSON, Shapefile (ZIP), GeoPackage, or JSON (unnested)' + this
                     }]
                 }
                 ,
@@ -358,8 +358,8 @@ $(document).ready(function () {
                     identifier: 'src_file',
                     rules: [{
                       type   : 'regExp',
-                      value  : '/^(.*.((zip|csv|json|geojson)$))?[^.]*$/i',
-                      prompt : 'Comparison data: formats allowed are CSV, GeoJSON, Shapefile (ZIP), or JSON (unnested)'
+                      value  : '/^(.*.((zip|csv|json|gpkg|geojson)$))?[^.]*$/i',
+                      prompt : 'Comparison data: formats allowed are CSV, GeoJSON, Shapefile (ZIP), GeoPackage, or JSON (unnested)'
                     }]
                 }
             }
