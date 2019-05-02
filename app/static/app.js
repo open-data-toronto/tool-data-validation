@@ -79,15 +79,6 @@ $(document).ready(function () {
         $("#" + accordionId).find('*[data-tab="' + activateTab + '"]').addClass('active');
     }
 
-    function parseUrlName(url) {
-        return url
-            .split('/')
-            .map(x => {
-                return (["FeatureServer", "0", "query", "", "query?"].indexOf(x) < 0) ? x : null
-            })
-            .filter(x => x !== null).slice(-1)[0]
-    }
-
     function makeDataProfileTable(jsonContent, tableId = 'report-column-profile') {
         jsonContent['data'].map(row => {
             if (!row.slice(1).every(t => t === false)) {
