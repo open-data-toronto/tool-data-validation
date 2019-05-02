@@ -306,7 +306,7 @@ class DataFrameValidation:
             'level': 'error',
             'details': {
                 'count': invalid_geometries.shape[0],
-                'content': invalid_geometries.to_json()
+                'content': invalid_geometries.values.tolist()
             }
         }
         
