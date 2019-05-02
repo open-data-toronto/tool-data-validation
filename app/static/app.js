@@ -1,6 +1,5 @@
 var test;
 var srcFileName;
-var testForm;
 
 $(document).ready(function () {
     function addSchemaRows(numRows, checkAll = false, columnName, columnType) {
