@@ -11,12 +11,6 @@ import pandas as pd
 import requests
 import utils
 
-from fiona import BytesCollection
-
-import logging
-logger = logging.getLogger('VD')
-logger.setLevel(logging.DEBUG)
-
 class DataFrameComparison:
     def __init__(self, src, new, columns_excluded=['_id']):
         self.columns_excluded = columns_excluded
