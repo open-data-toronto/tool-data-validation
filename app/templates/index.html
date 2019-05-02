@@ -50,7 +50,7 @@
   </div>
   <br />
   <main id="page-content" class="ui container" style="padding-bottom:2em">
-    <h1 class="ui header">Data Validation Tool</h1>
+    <h1 class="ui header" id="form-title">Data Validation Tool</h1>
     <form class="ui form" id="form-atpf" method="post" enctype="multipart/form-data">
       <div class="ui segments">
         <div class="ui segment">
@@ -128,187 +128,200 @@
       <div class="ui error message"></div>
     </form>
 
-    <div class="ui container" id="report">
-      <h2 class="ui header top attached" id="file-results-overview">Validation</h2>
-      <div class="ui segment bottom attached">
-        <div class="ui basic segment" id="dataset-validation">
-          <h3 class="top attached">Dataset</h3>
-          <div class="ui info message attached">
-            <div class="header"><i class="icon"></i></div>
-          </div>
-          <div class="ui styled fluid accordion bottom attached" id="profiling-accordion">
-            <div class="title">
-              <div><i class="dropdown icon"></i>Details</div>
-            </div>
-            <div class="content">
-              <table class="ui very compact very basic table" id="report-data-profile">
-                <thead>
-                  <tr>
-                    <th></th>
-                    <th class="center aligned">Result</th>
-                  </tr>
-                </thead>
-                <tbody></tbody>
-              </table>
-              <div id="validation-map" style="height: 360px;"></div>
-            </div>
+    <div class="ui container vertically divided grid" id="report">
+        <div class="row">
+        <div class="sixteen wide column">
+            <h1 class="ui header" id="report-title"></h1>
           </div>
         </div>
-        <div class="ui basic segment" id="column-validation">
-          <h3 class="top attached">Columns</h3>
-          <div class="ui message attached">
-            <div class="header"><i class="icon"></i></div>
-          </div>
-          <div class="ui styled fluid accordion bottom attached" id="column-validation-accordion">
-            <div class="title">
-              <div><i class="dropdown icon"></i>Details</div>
-            </div>
-            <div class="content">
-              <div class="ui secondary pointing menu" id="report-data-profile-tabs">
-                <a class="item" data-tab="issues">Issues</a>
-                <a class="item" data-tab="passes">Passes</a>
-                <a class="item" data-tab="exclusions">Exclusions</a>
+      <div class="row">
+        <div class="sixteen wide column">
+          <h2 class="ui header" id="file-results-overview">Validation</h2>
+            <div class="ui basic segment" id="dataset-validation">
+              <h3 class="top attached">Dataset</h3>
+              <div class="ui info message attached">
+                <div class="header"><i class="icon"></i></div>
               </div>
-              <div class="ui tab" data-tab="issues" id="report-column-profile-issues">
-                <table class="ui very basic very compact table" id="report-column-profile">
-                  <thead>
-                    <tr></tr>
-                  </thead>
-                  <tbody>
-                  </tbody>
-                </table>
-              </div>
-              <div class="ui tab" data-tab="passes" id="report-column-profile-pass">
-                <table class="ui very basic very compact table" id="pass-report-column-profile">
-                  <thead>
-                    <tr></tr>
-                  </thead>
-                  <tbody>
-                  </tbody>
-                </table>
-              </div>
-              <div class="ui tab" data-tab="exclusions" id="excluded-columns">
-                <table class="ui very basic very compact table">
-                  <thead>
-                    <tr>
-                      <th>
-                        Columns excluded from analysis in previous screen
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div id="report-comparison">
-        <h2 class="ui header top attached" id="comparison-results">Comparison</h2>
-        <div class="ui segment bottom attached">
-            <div class="ui basic segment" id="comparison-results-dataset">
-                <h3 class="top attached">Dataset</h3>
-                <div class="ui message">
-                  <div class="header"><i class="icon"></i></div>
+              <div class="ui styled fluid accordion bottom attached" id="profiling-accordion">
+                <div class="title">
+                  <div><i class="dropdown icon"></i>Details</div>
                 </div>
-              </div>
-          <div class="ui basic segment" id="comparison-results-columns">
-            <h3 class="top attached">Columns</h3>
-            <div class="ui message attached">
-              <div class="header"><i class="icon"></i></div>
-            </div>
-            <div class="ui styled fluid accordion bottom attached" id="report-comparison-accordion">
-              <div class="title">
-                <div><i class="dropdown icon"></i>Details</div>
-              </div>
-              <div class="content">
-                <div class="ui secondary pointing menu" id="report-comparison-tabs">
-                  <a class="item" data-tab="added">Added</a>
-                  <a class="item" data-tab="removed">Removed</a>
-                  <a class="item" data-tab="modified">Modified</a>
-                  <a class="item" data-tab="matched">Matched</a>
-                </div>
-                <div class="ui tab" data-tab="added">
-                  <table class="ui very basic very compact table" id="compare-columns-added">
+                <div class="content">
+                  <table class="ui very compact very basic table" id="report-data-profile">
                     <thead>
                       <tr>
-                        <th>Column added to data file</th>
-                        <th class="center aligned">Type</th>
-                        <th class="center aligned">Change</th>
+                        <th></th>
+                        <th class="center aligned">Result</th>
                       </tr>
                     </thead>
-                    <tbody>
-                    </tbody>
+                    <tbody></tbody>
                   </table>
+                  <div id="validation-map" style="height: 360px;"></div>
                 </div>
-                <div class="ui tab" data-tab="removed">
-                  <table class="ui very basic very compact table" id="compare-columns-removed">
-                    <thead>
-                      <tr>
-                        <th>Column removed from ArcGIS Online</th>
-                        <th class="center aligned">Type</th>
-                        <th class="center aligned">Change</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                  </table>
+              </div>
+            </div>
+            <div class="ui basic segment" id="column-validation">
+              <h3 class="top attached">Columns</h3>
+              <div class="ui message attached">
+                <div class="header"><i class="icon"></i></div>
+              </div>
+              <div class="ui styled fluid accordion bottom attached" id="column-validation-accordion">
+                <div class="title">
+                  <div><i class="dropdown icon"></i>Details</div>
                 </div>
-                <div class="ui tab" data-tab="modified">
-                  <table class="ui very basic very compact table" id="compare-columns-modified">
-                    <thead>
+                <div class="content">
+                  <div class="ui secondary pointing menu" id="report-data-profile-tabs">
+                    <a class="item" data-tab="issues">Issues</a>
+                    <a class="item" data-tab="passes">Passes</a>
+                    <a class="item" data-tab="exclusions">Exclusions</a>
+                  </div>
+                  <div class="ui tab" data-tab="issues" id="report-column-profile-issues">
+                    <table class="ui very basic very compact table" id="report-column-profile">
+                      <thead>
+                        <tr></tr>
+                      </thead>
+                      <tbody>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="ui tab" data-tab="passes" id="report-column-profile-pass">
+                    <table class="ui very basic very compact table" id="pass-report-column-profile">
+                      <thead>
+                        <tr></tr>
+                      </thead>
+                      <tbody>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="ui tab" data-tab="exclusions" id="excluded-columns">
+                    <table class="ui very basic very compact table">
                       <thead>
                         <tr>
-                          <th></th>
-                          <th class="center aligned">Type in File</th>
-                          <th class="center aligned">Type in ArcGIS Online</th>
-                          <th class="center aligned">Change</th>
+                          <th>
+                            Columns excluded from analysis in previous screen
+                          </th>
                         </tr>
                       </thead>
-                    <tbody>
-                    </tbody>
-                  </table>
+                      <tbody>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
-                <div class="ui tab" data-tab="matched">
-                  <table class="ui very basic very compact table" id="compare-columns-matched">
-                    <thead>
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="row  comparison results">
+          <div class="sixteen wide column">
+          <h2 class="ui header" id="comparison-results">Comparison</h2>
+            <div class="ui basic segment" id="comparison-results-dataset">
+              <h3 class="top attached">Dataset</h3>
+              <div class="ui message">
+                <div class="header"><i class="icon"></i></div>
+              </div>
+            </div>
+            <div class="ui basic segment" id="comparison-results-columns">
+              <h3 class="top attached">Columns</h3>
+              <div class="ui message attached">
+                <div class="header"><i class="icon"></i></div>
+              </div>
+              <div class="ui styled fluid accordion bottom attached" id="report-comparison-accordion">
+                <div class="title">
+                  <div><i class="dropdown icon"></i>Details</div>
+                </div>
+                <div class="content">
+                  <div class="ui secondary pointing menu" id="report-comparison-tabs">
+                    <a class="item" data-tab="added">Added</a>
+                    <a class="item" data-tab="removed">Removed</a>
+                    <a class="item" data-tab="modified">Modified</a>
+                    <a class="item" data-tab="matched">Matched</a>
+                  </div>
+                  <div class="ui tab" data-tab="added">
+                    <table class="ui very basic very compact table" id="compare-columns-added">
                       <thead>
                         <tr>
-                          <th></th>
+                          <th>Column added to data file</th>
                           <th class="center aligned">Type</th>
                           <th class="center aligned">Change</th>
                         </tr>
                       </thead>
-                    <tbody>
-                    </tbody>
+                      <tbody>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="ui tab" data-tab="removed">
+                    <table class="ui very basic very compact table" id="compare-columns-removed">
+                      <thead>
+                        <tr>
+                          <th>Column removed from ArcGIS Online</th>
+                          <th class="center aligned">Type</th>
+                          <th class="center aligned">Change</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="ui tab" data-tab="modified">
+                    <table class="ui very basic very compact table" id="compare-columns-modified">
+                      <thead>
+                        <thead>
+                          <tr>
+                            <th></th>
+                            <th class="center aligned">Type in File</th>
+                            <th class="center aligned">Type in ArcGIS Online</th>
+                            <th class="center aligned">Change</th>
+                          </tr>
+                        </thead>
+                      <tbody>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="ui tab" data-tab="matched">
+                    <table class="ui very basic very compact table" id="compare-columns-matched">
+                      <thead>
+                        <thead>
+                          <tr>
+                            <th></th>
+                            <th class="center aligned">Type</th>
+                            <th class="center aligned">Change</th>
+                          </tr>
+                        </thead>
+                      <tbody>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="ui basic segment">
+              <h3 class="top attached">Rows</h3>
+              <div class="ui styled fluid accordion bottom attached">
+                <div class="title">
+                  <div><i class="dropdown icon"></i>Details</div>
+                </div>
+                <div class="content">
+                  <table class="ui very basic very compact table" id="report-compare-rows">
+                    <thead>
+                      <tr></tr>
+                    </thead>
+                    <tbody></tbody>
                   </table>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="ui basic segment">
-            <h3 class="top attached">Rows</h3>
-            <div class="ui styled fluid accordion bottom attached">
-              <div class="title">
-                <div><i class="dropdown icon"></i>Details</div>
-              </div>
-              <div class="content">
-                <table class="ui very basic very compact table" id="report-compare-rows">
-                  <thead>
-                    <tr></tr>
-                  </thead>
-                  <tbody></tbody>
-                </table>
-              </div>
-            </div>
+        </div>
+      </div>
+      <div class="row">
+          <div class="sixteen wide column">
+          <div class="ui buttons">
+            <button class="ui button right labeled icon left floated disabled" id="ckan"><i class="share square icon"></i>Push
+              to CKAN</button>
+            <button class="ui primary button right labeled right floated icon" id="download"><i class="download icon"></i>Download
+              CSV</button>
           </div>
         </div>
       </div>
-      <div>
-          <button class="ui primary button right labeled right floated icon" id="download"><i class="download icon"></i>Download CSV</button>
-          <button class="ui button right labeled icon left floated disabled" id="ckan"><i class="share square icon"></i>Push to CKAN</button>
-        </div>
     </div>
   </main>
 </body>

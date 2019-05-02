@@ -421,7 +421,8 @@ $(document).ready(function () {
                         let datasetName = formData.get('dataset_name');
 
                         $('#form-atpf').hide();
-                        $('h1').html((datasetName ? datasetName + '<div class="ui sub header">Data Validation Report Results</div>' : 'Data Validation Report' ))
+                        $('#form-title').remove();
+                        $('#report-title').html((datasetName ? datasetName + '<div class="ui sub header">Data Validation Report Results</div>' : 'Data Validation Report' ))
                         // $('#report-info tbody')
                         //     .append('<tr><td>New File</td><td>' + new_file_name + '</td></tr>')
                         //     .append(comparison_url ? '<tr><td>ArcGIS Online URL</td><td><a href="' + comparison_url + '">' + comparison_url + '</a></td></tr>' : '')
@@ -464,7 +465,7 @@ $(document).ready(function () {
 
                         // Comparisons
                         if (!compare_rows && !compare_columns) {
-                            $('#report-comparison').remove()
+                            $('.comparison.results').remove()
                         } else {
                             let cellTypes = {
                                 modified: { messageType: 'warning', icon: 'warning' },
@@ -503,7 +504,7 @@ $(document).ready(function () {
                             });
 
                             $('#comparison-results-dataset .ui.message')
-                                .addClass(compare_dataframes.level)
+                                .addClass((compare_dataframes.level === 'info') ? '' : compare_dataframes.level)
                                 .find('.header')
                                 .first()
                                 .append(compare_dataframes.message)
