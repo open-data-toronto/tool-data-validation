@@ -1,50 +1,68 @@
-# Data Validation Tool
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## About
+## Available Scripts
 
-This is a simple app to help check data files for common issues we see at Open Data.
+In the project directory, you can run:
 
-### Purpose
+### `npm start`
 
-It is intended to reduce the time that traditionally goes into validating these datasets, as well as empower publishers to conduct these checks themselves.
+Runs the app in the development mode.<br>
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-### Use case
+The page will reload if you make edits.<br>
+You will also see any lint errors in the console.
 
-Checking data for issues before publishing a new or an updated dataset.
+### `npm test`
 
-## Running the app
+Launches the test runner in the interactive watch mode.<br>
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### Requirements
+### `npm run build`
 
-* `Docker`: a container with all dependencies for running the app.
-* `Docker Compose`: to build the Docker image and run it in replaceable mode to restart it if it crashes.
+Builds the app for production to the `build` folder.<br>
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-### Commands
+The build is minified and the filenames include the hashes.<br>
+Your app is ready to be deployed!
 
-Need to run from the main directory, where the `Dockerfile` and the `docker-compose.yml` files are located.
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-#### Execute
+### `npm run eject`
 
-> docker-compose up --build [-d]
+**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-This builds the image and brings the app online at Port 5000 by default. Visit `http://localhost:5000` to see it.
+If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-#### Logs
+Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-> docker-compose logs [-f]
+You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Validating a data file
+## Learn More
 
-1. Enter a dataset name (**optional**)
-1. Upload data to validate
-    * **Allowed formats**: CSV, Shapefile (in ZIP), GeoJSON, JSON (unnested), GeoPackage
-1. Upload data to compare against (**optional**): can upload another file or enter the URL for a dataset stored in ArcGIS Online.
-    * *Example - Data in ArcGIS Online*: [https://services3.arcgis.com/b9WvedVPoizGfvfD/ArcGIS/rest/services/COTGEO_POLICE_DIVISION/FeatureServer](https://services3.arcgis.com/b9WvedVPoizGfvfD/ArcGIS/rest/services/COTGEO_POLICE_DIVISION/FeatureServer)
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-## Caveats
+To learn React, check out the [React documentation](https://reactjs.org/).
 
-This app is not suited for production environments
+### Code Splitting
 
-## License
+This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
 
-* [MIT License](https://github.com/open-data-toronto/tool-data-validation/blob/master/LICENSE)
+### Analyzing the Bundle Size
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+
+### Making a Progressive Web App
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+
+### Advanced Configuration
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+
+### Deployment
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+
+### `npm run build` fails to minify
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify

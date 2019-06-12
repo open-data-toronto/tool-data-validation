@@ -13,6 +13,9 @@ RUN curl -sSL https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64
 && conda clean --all --yes \
 && conda config --add channels conda-forge 
 
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - \
+&& apt-get -qqy install nodejs
+
 ENV PATH /opt/conda/bin:$PATH
 
 WORKDIR /usr/src/app

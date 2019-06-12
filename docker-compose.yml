@@ -6,3 +6,6 @@ services:
     ports:
       - "5000:5000"
     restart: always
+    volumes:
+      - "/Users/chernan/open-data/tool-data-validation/app:/usr/src/app/app"
+      
